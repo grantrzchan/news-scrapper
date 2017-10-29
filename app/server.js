@@ -3,6 +3,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const handlebars = require("handlebars");
 const bodyParser = require("body-parser");
+// const methodOverride = require("method-override");
 const path = require("path");
 const mongoose = require("mongoose");
 // Promise based http library, used to handle Ajax requests for both client and server side
@@ -33,9 +34,11 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(path.join(__dirname, "app/public")));
 //Set up handlebars
 app.engine('handlebars', exphbs({
-    defaultLayout: 'main'
+    defaultLayout: 'app/main'
 }));
 app.set('view engine', 'handlebars');
+//use views folder
+app.set('views', path.join(__dirname, 'app/views'));
 
 // Set mongoose to use built-in JS ES6 promises features
 mongoose.Promise = Promise;
