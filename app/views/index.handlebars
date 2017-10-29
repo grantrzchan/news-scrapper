@@ -8,11 +8,33 @@
             <a href="#">Saved Articles</a>
         </li>
         <li>
-            <a href="#">Scrap Articles!</a>
+            <a class="button btn-danger scrape-new">Scrap Articles!</a>
         </li>
     </ul>
 </nav>
+<div class="jumbotron text-center">
+    <div class="overlay">
+    </div>
+    <div class="background-image">
+    </div>
+    <div class="caption">
+        <h1>The Onion Scrapper</h1>
+        <h4>Your #1 Source for the World's Most Trusted Fake News</h4>
+    </div>
+</div>
 {{!-- div for all articles; articles take all 12 columns --}}
-<div class="container">
-    {{#each scraper}}{{/each}}
+<div class="container article-container">
+    {{#each scraper}}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>
+                <a class="article-link" href={{this.url}}>{{this.title}}</a>
+            </h3>
+            <a class="btn btn-success save">Save Article</a>
+        </div>
+        <div class="panel-body">
+            <p>{{this.note}}</p>
+        </div>
+    </div>
+    {{/each}}
 </div>
