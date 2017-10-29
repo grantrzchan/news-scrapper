@@ -1,0 +1,23 @@
+{
+  "name": "news-scrapper",
+  "version": "1.0.0",
+  "description": "News scrapper using The Onion",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grantrzchan/news-scrapper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grantrzchan/news-scrapper/issues"
+  },
+  "homepage": "https://github.com/grantrzchan/news-scrapper#readme",
+  "dependencies": {
+    "axios": "^0.17.0",
+    "morgan": "^1.9.0"
+  }
+}
