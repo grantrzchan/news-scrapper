@@ -1,7 +1,7 @@
 //Set up dependencies
 const express = require("express");
 const exphbs = require("express-handlebars");
-const handlebars = require("handlebars");
+// const handlebars = require("handlebars");
 const bodyParser = require("body-parser");
 // const methodOverride = require("method-override");
 const path = require("path");
@@ -13,7 +13,7 @@ const logger = require("morgan");
 
 //***Move to routes once it works */
 const request = require("request");
-const mongojs = require("mongojs");
+// const mongojs = require("mongojs");
 // const express = require("express");
 const cheerio = require("cheerio");
 
