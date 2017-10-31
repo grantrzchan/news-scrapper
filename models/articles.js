@@ -26,4 +26,5 @@ var Art_Schema = new Schema({
 });
 
 // create and export Article model
-export const Article = mongoose.model("Article",Art_Schema);
+const Article = mongoose.model("Article",Art_Schema);
+module.exports = Article;

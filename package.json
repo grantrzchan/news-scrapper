@@ -18,6 +18,7 @@
   "homepage": "https://github.com/grantrzchan/news-scrapper#readme",
   "dependencies": {
     "axios": "^0.17.0",
+    "express-handlebars": "^3.0.0",
     "morgan": "^1.9.0"
   }
 }
