@@ -6,7 +6,37 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../public/assets/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+        crossorigin="anonymous"></script>
+    {{!-- <script src="./../../public/assets/ajax_jquery.js"></script> --}}
+    </head>
     <body>{{{body}}}</body>
-</head>
+<script>
+    //Script to do front-end AJAX calls to mongoDB
+
+        //Execute functionalities only when the document is fully loaded
+        $(document).ready(function () {
+
+
+
+            //function to perform AJAX call
+            function ajaxCall() {
+                $(".save").on("click", saveArticles);
+
+            }
+
+            //function to perform when save button is clicked
+            function saveArticles() {
+                    var ArticleId = $(this).parents("panel").children("article-link").data("_id", scraper._id);
+                    console.log(ArticleId);
+                    $.ajax({
+                        METHOD: "POST",
+                        url: "/toSave/:id",
+                        data: ArticleId
+                    }).then((data) => { console.log(data) });
+                }
+
+        });
+</script>
 </html>    
 </DOCTYPE>

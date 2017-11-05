@@ -16,6 +16,10 @@ var Art_Schema = new Schema({
         type: String,
         required: true
     } ,
+    isSaved:{
+        type: Boolean,
+        default: false
+    },
     //note is an object that stores a note id
     //The ref property links the  ObjectId to the NOte model
     //This allows populating of the article model with an associated note

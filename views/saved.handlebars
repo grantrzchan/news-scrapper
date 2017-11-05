@@ -1,0 +1,40 @@
+<nav class="navbar navbar-inverse" role="navigation">
+    <a class="navbar-brand" href="/">The Onion Scrapper</a>
+    <ul class="nav navbar-nav">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li>
+            <a href="#">Saved Articles</a>
+        </li>
+        <li>
+            <a class="button btn-danger scrape-new">Scrap Articles!</a>
+        </li>
+    </ul>
+</nav>
+<div class="jumbotron text-center">
+    <div class="overlay">
+    </div>
+    <div class="background-image">
+    </div>
+    <div class="caption">
+        <h1>Your Saved Articles</h1>
+        <h4>From the Onion Scrapper</h4>
+    </div>
+</div>
+{{!-- div for all articles; articles take all 12 columns --}}
+<div class="container article-container">
+    {{#each scraper}}{{#if this.isSaved}}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>
+                <a class="article-link" href={{this.url}}>{{this.title}}</a>
+            </h3>
+            <a class="btn btn-danger delete">Delete Saved Article</a>
+        </div>
+        <div class="panel-body">
+            <p>{{this.note}}</p>
+        </div>
+    </div>
+    {{/if}}{{/each}}
+</div>
