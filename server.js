@@ -72,7 +72,7 @@ console.log(path.join(__dirname, 'models'));
 app.get("/", (req, res) => {
     db.Article.find().then((found, err) => {
         //If there are no error, send data to browser and print to console
-        console.log(found);
+        // console.log(found);cle
         res.render("index", {
             scraper: found
         });
@@ -102,8 +102,9 @@ app.get("/articles/:id", (req, res) => {
         .populate("Note")
         .then((found, err) => {
             //If there are no error, send data to browser and print to console
-            console.log(found.pretty()); //maybe pretty does't work?
-            res.render("index",{scraper: found});
+            res.render("index", {
+                scraper: found
+            });
         });
 }); //end of app.get() for one article
 
@@ -124,14 +125,12 @@ app.get("/scraped", (req, res) => {
                 scrapedData.url = url;
                 db.Article.create(scrapedData).then(function (found, err) {
                     //If no issues occur, send a message to the server stating Scrape completed.
-                    // res.send("Scrape Completed!");
                     console.log("Scrape Completed!");
                 }).catch(function (err) {
                     //err check for create
                     console.log(err);
                 })
             } else {
-                // res.send("Cannot find title or URL!");
                 console.log("Cannot find title or URL!");
             }
         }); //end of $((".featured-headline").each()
@@ -147,11 +146,46 @@ app.get("/scraped", (req, res) => {
 //Route to save one article
 app.post("/toSave/:id", (req, res) => {
     console.log(req.params.id);
-    //Create new note for article passed
-    db.Article.update({ _id: req.params.id }, { $set: { isSaved: true } }, function(){console.log("Update Successful")}).then(function (found) {
-        res.redirect("/");
-    });
-}); //end of app.put()
+    db.Article.update({
+            _id: req.params.id
+        }, {
+            $set: {
+                isSaved: true
+            }
+        },
+        // If successful, mongoose will send back an object containing a key of "ok" with the value of 1, which means a boolean of true
+        function (err, data) {
+            if (data.ok) {
+                console.log("Save Successful");
+                res.redirect("/");
+            }
+            else{
+                console.log(err);
+            }
+        })
+}); //end of app.post() to save articles
+
+//Route to unsave one article (delete from /saved route but not from articles collection)
+app.post("/unSave/:id", (req, res) => {
+    console.log(req.params.id);
+    db.Article.update({
+        _id: req.params.id
+    }, {
+            $set: {
+                isSaved: false
+            }
+        },
+        // If successful, mongoose will send back an object containing a key of "ok" with the value of 1, which means a boolean of true
+        function (err, data) {
+            if (data.ok) {
+                console.log("Unsave Successful");
+                res.redirect("/saved");
+            }
+            else {
+                console.log(err);
+            }
+        })
+}); //end of app.post() to unsave articles
 
 //******************************************* */
 

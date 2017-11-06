@@ -1,42 +1,77 @@
 <DOCTYPE !HTML>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>The Onion Scrapper: Your #1 Trusted Source for Fake News</title>
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../public/assets/style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-        crossorigin="anonymous"></script>
-    {{!-- <script src="./../../public/assets/ajax_jquery.js"></script> --}}
-    </head>
-    <body>{{{body}}}</body>
-<script>
-    //Script to do front-end AJAX calls to mongoDB
+    <html>
 
+    <head>
+        <meta charset="UTF-8">
+        <title>The Onion Scrapper: Your #1 Trusted Source for Fake News</title>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../public/assets/style.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> {{!--
+        <script src="./../../public/assets/ajax_jquery.js"></script> --}}
+    </head>
+
+    <body>
+        <nav class="navbar navbar-inverse" role="navigation">
+            <a class="navbar-brand" href="/">The Onion Scrapper</a>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/saved">Saved Articles</a>
+                </li>
+                <li>
+                    <button class="btn btn-warning scrape-new">Scrap Articles!</button>
+                </li>
+            </ul>
+        </nav>
+        {{{body}}}
+        </body>
+    <script>
+        //Script to do front-end AJAX calls to mongoDB
         //Execute functionalities only when the document is fully loaded
         $(document).ready(function () {
-
-
+            //Do ajax call and wait for click event
+            ajaxCall();
 
             //function to perform AJAX call
             function ajaxCall() {
                 $(".save").on("click", saveArticles);
+                $(".unsave").on("click", unsaveArticles);
+                $(".scrape-new").on("click", scrapeArticles);
 
             }
 
             //function to perform when save button is clicked
             function saveArticles() {
-                    var ArticleId = $(this).parents("panel").children("article-link").data("_id", scraper._id);
-                    console.log(ArticleId);
-                    $.ajax({
-                        METHOD: "POST",
-                        url: "/toSave/:id",
-                        data: ArticleId
-                    }).then((data) => { console.log(data) });
-                }
+                $(this).attr("class","btn btn-info");
+                $(this).html("Saved!");
+                var ArticleId = $(this).parents(".panel").data("_id");
+                console.log(ArticleId);
+                $.ajax({
+                    type: "POST",
+                    url: `/toSave/${ArticleId}`,
+                }).then((data, textStatus, error) => { if (error) console.log(error); });
+            }
 
+            function unsaveArticles() {
+                var ArticleId = $(this).parents(".panel").data("_id");
+                console.log(ArticleId);
+                $.ajax({
+                    type: "POST",
+                    url: `/unSave/${ArticleId}`,
+                }).then((data, textStatus, error) => { if (error) console.log(error); });
+            }
+
+            function scrapeArticles() {
+                $.ajax({
+                    type: "GET",
+                    url: `/scraped`,
+                }).then((data, textStatus, error) => { if (error) console.log(error); });
+            }
         });
-</script>
-</html>    
+    </script>
+
+    </html>
 </DOCTYPE>
