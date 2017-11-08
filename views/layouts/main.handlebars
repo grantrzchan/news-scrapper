@@ -5,12 +5,13 @@
         <meta charset="UTF-8">
         <title>The Onion Scrapper: Your #1 Trusted Source for Fake News</title>
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="../public/assets/style.css">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="../../public/assets/style.css">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> {{!--
+            crossorigin="anonymous"></script> {{!--
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script> --}}
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> {{!--
         <script src="./../../public/assets/ajax_jquery.js"></script> --}}
     </head>
 
@@ -22,12 +23,30 @@
                     <a href="/saved">Saved Articles</a>
                 </li>
                 <li>
-                    <button class="btn btn-warning scrape-new">Scrap Articles!</button>
+                    <button type="button" class="btn btn-warning scrape-new">Scrap Articles!</button>
                 </li>
             </ul>
         </nav>
+        <!-- Modal -->
+        <div class="modal fade" id="scrapeModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img id="onion-favicon" height="20px" width ="20px" src="https://d30y9cdsu7xlg0.cloudfront.net/png/26154-200.png" / alt="The Onion">
+                        <h4 class="modal-title" float="right">Scrape the Onion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Articles scraped!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{{body}}}
-        </body>
+    </body>
     <script>
         //Script to do front-end AJAX calls to mongoDB
         //Execute functionalities only when the document is fully loaded
@@ -43,32 +62,61 @@
 
             }
 
+            //Function to initialize page; essentially refreshing page with an ajax get
+            //function loadPage(){
+            //$.ajax({
+            //type: "GET",
+            //url:`/`
+
+            //}).then
+            // }
+
             //function to perform when save button is clicked
             function saveArticles() {
-                $(this).attr("class","btn btn-info");
+                $(this).attr("class", "btn btn-info");
                 $(this).html("Saved!");
-                var ArticleId = $(this).parents(".panel").data("_id");
+                $(this).parents(".panel").delay(100).slideUp("slow");
+                let ArticleId = $(this).parents(".panel").data("_id");
                 console.log(ArticleId);
                 $.ajax({
                     type: "POST",
                     url: `/toSave/${ArticleId}`,
-                }).then((data, textStatus, error) => { if (error) console.log(error); });
+                }).then((data, textStatus, error) => {
+                    if (error) { console.log(error) }
+                    else {
+                        //Hide panel when save is a success
+                        //but jquery method doesn't work inside promise statement?
+                        //$(this).parents(".panel").delay(100).slideUp("slow"); 
+                    };
+                });
             }
 
             function unsaveArticles() {
-                var ArticleId = $(this).parents(".panel").data("_id");
+                $(this).html("Deleted!");
+                $(this).parents(".panel").delay(100).slideUp("slow");
+                let ArticleId = $(this).parents(".panel").data("_id");
                 console.log(ArticleId);
                 $.ajax({
                     type: "POST",
                     url: `/unSave/${ArticleId}`,
-                }).then((data, textStatus, error) => { if (error) console.log(error); });
+                }).then((data, textStatus, error) => {
+                    if (error) { console.log(error) }
+                    else {
+                        //Hide panel when unsave is a success
+                        //but jquery method doesn't work inside promise statement?
+                        //$(this).parents(".panel").delay(100).slideUp("slow");
+                    };
+                });
             }
 
             function scrapeArticles() {
                 $.ajax({
                     type: "GET",
                     url: `/scraped`,
-                }).then((data, textStatus, error) => { if (error) console.log(error); });
+                }).then((data, textStatus, error) => {
+                    if (error) console.log(error);
+                    $("#scrapeModal").modal();
+                });
             }
         });
     </script>

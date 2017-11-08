@@ -70,7 +70,7 @@ console.log(path.join(__dirname, 'models'));
 
 //Main route to index?????????????????
 app.get("/", (req, res) => {
-    db.Article.find().then((found, err) => {
+    db.Article.find({}).then((found, err) => {
         //If there are no error, send data to browser and print to console
         // console.log(found);cle
         res.render("index", {
@@ -116,6 +116,7 @@ app.get("/scraped", (req, res) => {
         let $ = cheerio.load(a_res.data);
         //Search for each element with a "featured-headline" class
         $(".headline--wrapper").each((index, element) => {
+            // let scrapeCount = 0;
             let title = $(element).children("a").children(".featured-headline").text();
             let url = $(element).children("a").attr("href");
             //if both title and url are found for each article, add them to db
@@ -126,6 +127,7 @@ app.get("/scraped", (req, res) => {
                 db.Article.create(scrapedData).then(function (found, err) {
                     //If no issues occur, send a message to the server stating Scrape completed.
                     console.log("Scrape Completed!");
+                    // scrapeCount += 1;
                 }).catch(function (err) {
                     //err check for create
                     console.log(err);
@@ -140,6 +142,7 @@ app.get("/scraped", (req, res) => {
     }); //end of axios.get().then()
     db.Article.find().then((data, err) => {
         res.json(data);
+        // return scrapeCount;
     });
 }); //end of app.get() for scraped
 

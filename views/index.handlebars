@@ -4,13 +4,14 @@
     <div class="background-image">
     </div>
     <div class="caption">
-        <h1>The Onion Scrapper</h1>
+        <img id="onion-header" height="85px" width ="640px" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8d/The_Onion.svg/1280px-The_Onion.svg.png" alt="the Onion"/>
+        <h1>Scrapper</h1>
         <h4>Your #1 Source for the World's Most Trusted Fake News</h4>
     </div>
 </div>
 {{!-- div for all articles; articles take all 12 columns --}}
 <div class="container article-container">
-    {{#each scraper}}
+    {{#each scraper}}{{#unless this.isSaved}}
     <div class="panel panel-default" data-_id={{this._id}}>
         <div class="panel-heading">
             <h3>
@@ -22,5 +23,5 @@
             <p>{{this.note}}</p>
         </div>
     </div>
-    {{/each}}
+    {{/unless}}{{/each}}
 </div>

@@ -1,0 +1,27 @@
+#onion-favicon {
+    height: 20px;
+    width: 20px;
+}
+
+#onion-header {
+    width: 640px;
+    height: 85px;
+}
+
+.modal-title {
+    float: right;
+}
+
+#onion-header,
+#onion-favicon {
+    float: left;
+}
+
+.jumbotron, .text-center {
+    font-family: 'Lato', sans-serif;
+    font-weight: 'bolder';
+    background-color: #ffffff;
+}
+.scrape-new{
+    padding-top: 20px;
+}
