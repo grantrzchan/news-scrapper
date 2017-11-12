@@ -33,14 +33,14 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <img id="onion-favicon" height="20px" width ="20px" src="https://d30y9cdsu7xlg0.cloudfront.net/png/26154-200.png" / alt="The Onion">
+                        <img id="onion-favicon" height="20px" width="20px" src="https://d30y9cdsu7xlg0.cloudfront.net/png/26154-200.png" / alt="The Onion">
                         <h4 class="modal-title" float="right">Scrape the Onion</h4>
                     </div>
                     <div class="modal-body">
                         <p>Articles scraped!</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" id="closeModal">Close</button>
                     </div>
                 </div>
             </div>
@@ -63,12 +63,6 @@
             }
 
             //Function to initialize page; essentially refreshing page with an ajax get
-            //function loadPage(){
-            //$.ajax({
-            //type: "GET",
-            //url:`/`
-
-            //}).then
             // }
 
             //function to perform when save button is clicked
@@ -116,6 +110,9 @@
                 }).then((data, textStatus, error) => {
                     if (error) console.log(error);
                     $("#scrapeModal").modal();
+                    $("#closeModal").on("click", function(){
+                       this.done(window.location.href = "/");
+                    });
                 });
             }
         });
